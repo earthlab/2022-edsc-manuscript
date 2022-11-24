@@ -1,0 +1,41 @@
+Item#,Item,Trial,Confidence,Count,Percentage
+Q21#2_1,"Use technical science skills (such as tools, instruments, and techniques)",BEFORE,Not Confident,12,25
+Q21#2_1,"Use technical science skills (such as tools, instruments, and techniques)",BEFORE,Slightly Confident,21,44
+Q21#2_1,"Use technical science skills (such as tools, instruments, and techniques)",BEFORE,Moderately Confident,13,27
+Q21#2_1,"Use technical science skills (such as tools, instruments, and techniques)",BEFORE,Very Confident,2,4
+Q21#1_1,"Use technical science skills (such as tools, instruments, and techniques)",AFTER,Not Confident,0,0
+Q21#1_1,"Use technical science skills (such as tools, instruments, and techniques)",AFTER,Slightly Confident,4,9
+Q21#1_1,"Use technical science skills (such as tools, instruments, and techniques)",AFTER,Moderately Confident,28,58
+Q21#1_1,"Use technical science skills (such as tools, instruments, and techniques)",AFTER,Very Confident,16,33
+Q21#2_5,Figure out how the data that you've downloaded for a project can be used to address your science question,BEFORE,Not Confident,12,25
+Q21#2_5,Figure out how the data that you've downloaded for a project can be used to address your science question,BEFORE,Slightly Confident,17,36
+Q21#2_5,Figure out how the data that you've downloaded for a project can be used to address your science question,BEFORE,Moderately Confident,16,33
+Q21#2_5,Figure out how the data that you've downloaded for a project can be used to address your science question,BEFORE,Very Confident,3,6
+Q21#1_5,Figure out how the data that you've downloaded for a project can be used to address your science question,AFTER,Not Confident,1,2
+Q21#1_5,Figure out how the data that you've downloaded for a project can be used to address your science question,AFTER,Slightly Confident,4,8
+Q21#1_5,Figure out how the data that you've downloaded for a project can be used to address your science question,AFTER,Moderately Confident,22,46
+Q21#2_5,Figure out how the data that you've downloaded for a project can be used to address your science question,AFTER,Very Confident,21,44
+Q21#2_10,Communicate project results in a blog format,BEFORE,Not Confident,9,19
+Q21#2_10,Communicate project results in a blog format,BEFORE,Slightly Confident,20,42
+Q21#2_10,Communicate project results in a blog format,BEFORE,Moderately Confident,16,33
+Q21#2_10,Communicate project results in a blog format,BEFORE,Very Confident,3,6
+Q21#1_10,Communicate project results in a blog format,AFTER,Not Confident,2,4
+Q21#1_10,Communicate project results in a blog format,AFTER,Slightly Confident,8,17
+Q21#1_10,Communicate project results in a blog format,AFTER,Moderately Confident,22,46
+Q21#1_10,Communicate project results in a blog format,AFTER,Very Confident,16,33
+Q21#2_6,Describe the results of your data processing as it relates to your science question,BEFORE,Not Confident,9,18
+Q21#2_6,Describe the results of your data processing as it relates to your science question,BEFORE,Slightly Confident,20,42
+Q21#2_6,Describe the results of your data processing as it relates to your science question,BEFORE,Moderately Confident,13,27
+Q21#2_6,Describe the results of your data processing as it relates to your science question,BEFORE,Very Confident,6,13
+Q21#1_6,Describe the results of your data processing as it relates to your science question,AFTER,Not Confident,0,0
+Q21#1_6,Describe the results of your data processing as it relates to your science question,AFTER,Slightly Confident,4,8
+Q21#1_6,Describe the results of your data processing as it relates to your science question,AFTER,Moderately Confident,22,46
+Q21#1_6,Describe the results of your data processing as it relates to your science question,AFTER,Very Confident,22,46
+Q21#2_4,Find the data that you need to address a science question,BEFORE,Not Confident,12,25
+Q21#2_4,Find the data that you need to address a science question,BEFORE,Slightly Confident,16,33
+Q21#2_4,Find the data that you need to address a science question,BEFORE,Moderately Confident,14,29
+Q21#2_4,Find the data that you need to address a science question,BEFORE,Very Confident,6,13
+Q21#1_4,Find the data that you need to address a science question,AFTER,Not Confident,0,0
+Q21#1_4,Find the data that you need to address a science question,AFTER,Slightly Confident,6,13
+Q21#1_4,Find the data that you need to address a science question,AFTER,Moderately Confident,21,43
+Q21#1_4,Find the data that you need to address a science question,AFTER,Very Confident,21,44

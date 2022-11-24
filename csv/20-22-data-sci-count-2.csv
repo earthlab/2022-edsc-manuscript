@@ -1,0 +1,41 @@
+Item#,Item,Confidence,Trial,Count,Percentage,
+Q19#1_2,I can create reproducible workflows,Very Confident,AFTER,13,28,100
+Q19#1_2,I can create reproducible workflows,Moderately Confident,AFTER,23,50,
+Q19#1_2,I can create reproducible workflows,Slightly Confident,AFTER,9,20,
+Q19#1_2,I can create reproducible workflows,Not Confident,AFTER,1,2,
+Q19#2_2,I can create reproducible workflows,Very Confident,BEFORE,2,4,101
+Q19#2_2,I can create reproducible workflows,Moderately Confident,BEFORE,7,15,
+Q19#2_2,I can create reproducible workflows,Slightly Confident,BEFORE,17,37,
+Q19#2_2,I can create reproducible workflows,Not Confident,BEFORE,20,44,
+Q19#1_5,I can use remote sensing data,Very Confident,AFTER,9,20,100
+Q19#1_5,I can use remote sensing data,Moderately Confident,AFTER,20,43,
+Q19#1_5,I can use remote sensing data,Slightly Confident,AFTER,13,28,
+Q19#1_5,I can use remote sensing data,Not Confident,AFTER,4,9,
+Q19#2_5,I can use remote sensing data,Very Confident,BEFORE,2,4,101
+Q19#2_5,I can use remote sensing data,Moderately Confident,BEFORE,8,17,
+Q19#2_5,I can use remote sensing data,Slightly Confident,BEFORE,11,24,
+Q19#2_5,I can use remote sensing data,Not Confident,BEFORE,25,55,
+Q19#1_1,I can find and access data,Very Confident,AFTER,28,61,100
+Q19#1_1,I can find and access data,Moderately Confident,AFTER,14,30,
+Q19#1_1,I can find and access data,Slightly Confident,AFTER,4,9,
+Q19#1_1,I can find and access data,Not Confident,AFTER,0,0,
+Q19#2_1,I can find and access data,Very Confident,BEFORE,3,7,100
+Q19#2_1,I can find and access data,Moderately Confident,BEFORE,15,32,
+Q19#2_1,I can find and access data,Slightly Confident,BEFORE,15,33,
+Q19#2_1,I can find and access data,Not Confident,BEFORE,13,28,
+Q19#1_6,I can draw analytical conclusions from data,Very Confident,AFTER,19,41,100
+Q19#1_6,I can draw analytical conclusions from data,Moderately Confident,AFTER,23,50,
+Q19#1_6,I can draw analytical conclusions from data,Slightly Confident,AFTER,4,9,
+Q19#1_6,I can draw analytical conclusions from data,Not Confident,AFTER,0,0,
+Q19#2_6,I can draw analytical conclusions from data,Very Confident,BEFORE,4,9,100
+Q19#2_6,I can draw analytical conclusions from data,Moderately Confident,BEFORE,14,30,
+Q19#2_6,I can draw analytical conclusions from data,Slightly Confident,BEFORE,17,37,
+Q19#2_6,I can draw analytical conclusions from data,Not Confident,BEFORE,11,24,
+Q19#1_7,I can visualize scientific data,Very Confident,AFTER,22,48,100
+Q19#1_7,I can visualize scientific data,Moderately Confident,AFTER,17,37,
+Q19#1_7,I can visualize scientific data,Slightly Confident,AFTER,7,15,
+Q19#1_7,I can visualize scientific data,Not Confident,AFTER,0,0,
+Q19#2_7,I can visualize scientific data,Very Confident,BEFORE,3,7,99
+Q19#2_7,I can visualize scientific data,Moderately Confident,BEFORE,15,32,
+Q19#2_7,I can visualize scientific data,Slightly Confident,BEFORE,17,37,
+Q19#2_7,I can visualize scientific data,Not Confident,BEFORE,11,24,

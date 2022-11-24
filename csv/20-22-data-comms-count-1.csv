@@ -1,0 +1,51 @@
+Item#,Item,Trial,Agreement,Count,Percentage
+Q25#2_6,I can create plots and maps to visualize data using Python,BEFORE,Strongly Disagree,27,44
+Q25#2_6,I can create plots and maps to visualize data using Python,BEFORE,Disagree,11,31
+Q25#2_6,I can create plots and maps to visualize data using Python,BEFORE,Neither Agree nor Disagree,7,19
+Q25#2_6,I can create plots and maps to visualize data using Python,BEFORE,Agree,3,6
+Q25#2_6,I can create plots and maps to visualize data using Python,BEFORE,Strongly Agree,0,0
+Q25#1_6,I can create plots and maps to visualize data using Python,AFTER,Strongly Disagree,0,0
+Q25#1_6,I can create plots and maps to visualize data using Python,AFTER,Disagree,0,0
+Q25#1_6,I can create plots and maps to visualize data using Python,AFTER,Neither Agree nor Disagree,1,0
+Q25#1_6,I can create plots and maps to visualize data using Python,AFTER,Agree,30,81
+Q25#1_6,I can create plots and maps to visualize data using Python,AFTER,Strongly Agree,17,19
+Q25#2_3_1,I am comfortable writing code to analyze data,BEFORE,Strongly Disagree,19,25
+Q25#2_3_1,I am comfortable writing code to analyze data,BEFORE,Disagree,15,50
+Q25#2_3_1,I am comfortable writing code to analyze data,BEFORE,Neither Agree nor Disagree,8,13
+Q25#2_3_1,I am comfortable writing code to analyze data,BEFORE,Agree,5,6
+Q25#2_3_1,I am comfortable writing code to analyze data,BEFORE,Strongly Agree,1,6
+Q25#1_3_1,I am comfortable writing code to analyze data,AFTER,Strongly Disagree,0,0
+Q25#1_3_1,I am comfortable writing code to analyze data,AFTER,Disagree,2,6
+Q25#1_3_1,I am comfortable writing code to analyze data,AFTER,Neither Agree nor Disagree,8,18
+Q25#1_3_1,I am comfortable writing code to analyze data,AFTER,Agree,29,63
+Q25#1_3_1,I am comfortable writing code to analyze data,AFTER,Strongly Agree,9,13
+Q25#2_4_1,I know how to document formulas/code so others can understand and use it,BEFORE,Strongly Disagree,14,13
+Q25#2_4_1,I know how to document formulas/code so others can understand and use it,BEFORE,Disagree,17,49
+Q25#2_4_1,I know how to document formulas/code so others can understand and use it,BEFORE,Neither Agree nor Disagree,12,19
+Q25#2_4_1,I know how to document formulas/code so others can understand and use it,BEFORE,Agree,4,13
+Q25#2_4_1,I know how to document formulas/code so others can understand and use it,BEFORE,Strongly Agree,1,6
+Q25#1_4_1,I know how to document formulas/code so others can understand and use it,AFTER,Strongly Disagree,0,0
+Q25#1_4_1,I know how to document formulas/code so others can understand and use it,AFTER,Disagree,0,0
+Q25#1_4_1,I know how to document formulas/code so others can understand and use it,AFTER,Neither Agree nor Disagree,6,18
+Q25#1_4_1,I know how to document formulas/code so others can understand and use it,AFTER,Agree,30,69
+Q25#1_4_1,I know how to document formulas/code so others can understand and use it,AFTER,Strongly Agree,12,13
+Q25#2_5_1,With enough time I feel I can learn new programming languages,BEFORE,Strongly Disagree,5,0
+Q25#2_5_1,With enough time I feel I can learn new programming languages,BEFORE,Disagree,11,25
+Q25#2_5_1,With enough time I feel I can learn new programming languages,BEFORE,Neither Agree nor Disagree,15,38
+Q25#2_5_1,With enough time I feel I can learn new programming languages,BEFORE,Agree,12,31
+Q25#2_5_1,With enough time I feel I can learn new programming languages,BEFORE,Strongly Agree,5,6
+Q25#1_5_1,With enough time I feel I can learn new programming languages,AFTER,Strongly Disagree,0,0
+Q25#1_5_1,With enough time I feel I can learn new programming languages,AFTER,Disagree,0,0
+Q25#1_5_1,With enough time I feel I can learn new programming languages,AFTER,Neither Agree nor Disagree,2,0
+Q25#1_5_1,With enough time I feel I can learn new programming languages,AFTER,Agree,15,44
+Q25#1_5_1,With enough time I feel I can learn new programming languages,AFTER,Strongly Agree,31,56
+Q25#2_8,I am confident I can communicate about science by writing blogs,BEFORE,Strongly Disagree,8,6
+Q25#2_8,I am confident I can communicate about science by writing blogs,BEFORE,Disagree,13,13
+Q25#2_8,I am confident I can communicate about science by writing blogs,BEFORE,Neither Agree nor Disagree,12,31
+Q25#2_8,I am confident I can communicate about science by writing blogs,BEFORE,Agree,14,50
+Q25#2_8,I am confident I can communicate about science by writing blogs,BEFORE,Strongly Agree,1,0
+Q25#1_8,I am confident I can communicate about science by writing blogs,AFTER,Strongly Disagree,0,0
+Q25#1_8,I am confident I can communicate about science by writing blogs,AFTER,Disagree,2,6
+Q25#1_8,I am confident I can communicate about science by writing blogs,AFTER,Neither Agree nor Disagree,7,13
+Q25#1_8,I am confident I can communicate about science by writing blogs,AFTER,Agree,27,56
+Q25#1_8,I am confident I can communicate about science by writing blogs,AFTER,Strongly Agree,12,25

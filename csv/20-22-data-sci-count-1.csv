@@ -1,0 +1,41 @@
+Item#,Item,Confidence,Trial,Count,Percentage,
+Q19#1_9,I can publish my code,Very Confident,AFTER,13,28,100
+Q19#1_9,I can publish my code,Moderately Confident,AFTER,16,35,
+Q19#1_9,I can publish my code,Slightly Confident,AFTER,14,30,
+Q19#1_9,I can publish my code,Not Confident,AFTER,3,7,
+Q19#2_9,I can publish my code,Very Confident,BEFORE,2,4,100
+Q19#2_9,I can publish my code,Moderately Confident,BEFORE,3,7,
+Q19#2_9,I can publish my code,Slightly Confident,BEFORE,6,13,
+Q19#2_9,I can publish my code,Not Confident,BEFORE,35,76,
+Q19#1_10,I can use Jupyter Notebooks,Very Confident,AFTER,22,48,100
+Q19#1_10,I can use Jupyter Notebooks,Moderately Confident,AFTER,14,30,
+Q19#1_10,I can use Jupyter Notebooks,Slightly Confident,AFTER,9,20,
+Q19#1_10,I can use Jupyter Notebooks,Not Confident,AFTER,1,2,
+Q19#2_10,I can use Jupyter Notebooks,Very Confident,BEFORE,1,2,100
+Q19#2_10,I can use Jupyter Notebooks,Moderately Confident,BEFORE,3,7,
+Q19#2_10,I can use Jupyter Notebooks,Slightly Confident,BEFORE,6,13,
+Q19#2_10,I can use Jupyter Notebooks,Not Confident,BEFORE,36,78,
+Q19#1_4,I can write efficient and modular code,Very Confident,AFTER,8,17,100
+Q19#1_4,I can write efficient and modular code,Moderately Confident,AFTER,26,57,
+Q19#1_4,I can write efficient and modular code,Slightly Confident,AFTER,11,24,
+Q19#1_4,I can write efficient and modular code,Not Confident,AFTER,1,2,
+Q19#2_4,I can write efficient and modular code,Very Confident,BEFORE,1,2,100
+Q19#2_4,I can write efficient and modular code,Moderately Confident,BEFORE,3,7,
+Q19#2_4,I can write efficient and modular code,Slightly Confident,BEFORE,11,24,
+Q19#2_4,I can write efficient and modular code,Not Confident,BEFORE,31,67,
+Q19#1_3,I can use scientific programming to work with data,Very Confident,AFTER,14,30,100
+Q19#1_3,I can use scientific programming to work with data,Moderately Confident,AFTER,26,57,
+Q19#1_3,I can use scientific programming to work with data,Slightly Confident,AFTER,6,13,
+Q19#1_3,I can use scientific programming to work with data,Not Confident,AFTER,0,0,
+Q19#2_3,I can use scientific programming to work with data,Very Confident,BEFORE,1,2,100
+Q19#2_3,I can use scientific programming to work with data,Moderately Confident,BEFORE,5,11,
+Q19#2_3,I can use scientific programming to work with data,Slightly Confident,BEFORE,14,30,
+Q19#2_3,I can use scientific programming to work with data,Not Confident,BEFORE,26,57,
+Q19#1_8,I can document code so that others can easily understand and use it,Very Confident,AFTER,15,32,100
+Q19#1_8,I can document code so that others can easily understand and use it,Moderately Confident,AFTER,26,57,
+Q19#1_8,I can document code so that others can easily understand and use it,Slightly Confident,AFTER,3,7,
+Q19#1_8,I can document code so that others can easily understand and use it,Not Confident,AFTER,2,4,
+Q19#2_8,I can document code so that others can easily understand and use it,Very Confident,BEFORE,1,2,100
+Q19#2_8,I can document code so that others can easily understand and use it,Moderately Confident,BEFORE,8,17,
+Q19#2_8,I can document code so that others can easily understand and use it,Slightly Confident,BEFORE,9,20,
+Q19#2_8,I can document code so that others can easily understand and use it,Not Confident,BEFORE,28,61,

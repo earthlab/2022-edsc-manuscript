@@ -1,0 +1,51 @@
+Item#,Item,Trial,Agreement,Count,Percentage
+Q25#2_2_1,I am comfortable analyzing data,BEFORE,Strongly Disagree,2,0
+Q25#2_2_1,I am comfortable analyzing data,BEFORE,Disagree,10,6
+Q25#2_2_1,I am comfortable analyzing data,BEFORE,Neither Agree nor Disagree,17,44
+Q25#2_2_1,I am comfortable analyzing data,BEFORE,Agree,15,31
+Q25#2_2_1,I am comfortable analyzing data,BEFORE,Strongly Agree,4,19
+Q25#1_2_1,I am comfortable analyzing data,AFTER,Strongly Disagree,0,0
+Q25#1_2_1,I am comfortable analyzing data,AFTER,Disagree,1,0
+Q25#1_2_1,I am comfortable analyzing data,AFTER,Neither Agree nor Disagree,5,19
+Q25#1_2_1,I am comfortable analyzing data,AFTER,Agree,28,50
+Q25#1_2_1,I am comfortable analyzing data,AFTER,Strongly Agree,14,31
+Q25#2_7,"When I write about science, I can present my ideas clearly",BEFORE,Strongly Disagree,3,0
+Q25#2_7,"When I write about science, I can present my ideas clearly",BEFORE,Disagree,5,0
+Q25#2_7,"When I write about science, I can present my ideas clearly",BEFORE,Neither Agree nor Disagree,14,31
+Q25#2_7,"When I write about science, I can present my ideas clearly",BEFORE,Agree,22,56
+Q25#2_7,"When I write about science, I can present my ideas clearly",BEFORE,Strongly Agree,4,13
+Q25#1_7,"When I write about science, I can present my ideas clearly",AFTER,Strongly Disagree,0,0
+Q25#1_7,"When I write about science, I can present my ideas clearly",AFTER,Disagree,0,0
+Q25#1_7,"When I write about science, I can present my ideas clearly",AFTER,Neither Agree nor Disagree,7,19
+Q25#1_7,"When I write about science, I can present my ideas clearly",AFTER,Agree,24,50
+Q25#1_7,"When I write about science, I can present my ideas clearly",AFTER,Strongly Agree,17,31
+Q25#2_1_1,I feel comfortable using data in spreadsheets,BEFORE,Strongly Disagree,1,0
+Q25#2_1_1,I feel comfortable using data in spreadsheets,BEFORE,Disagree,10,0
+Q25#2_1_1,I feel comfortable using data in spreadsheets,BEFORE,Neither Agree nor Disagree,10,19
+Q25#2_1_1,I feel comfortable using data in spreadsheets,BEFORE,Agree,16,31
+Q25#2_1_1,I feel comfortable using data in spreadsheets,BEFORE,Strongly Agree,11,50
+Q25#1_1_1,I feel comfortable using data in spreadsheets,AFTER,Strongly Disagree,0,0
+Q25#1_1_1,I feel comfortable using data in spreadsheets,AFTER,Disagree,0,0
+Q25#1_1_1,I feel comfortable using data in spreadsheets,AFTER,Neither Agree nor Disagree,2,0
+Q25#1_1_1,I feel comfortable using data in spreadsheets,AFTER,Agree,19,38
+Q25#1_1_1,I feel comfortable using data in spreadsheets,AFTER,Strongly Agree,27,62
+Q25#2_9,I am confident in my ability to explain science to non-scientists,BEFORE,Strongly Disagree,1,0
+Q25#2_9,I am confident in my ability to explain science to non-scientists,BEFORE,Disagree,5,0
+Q25#2_9,I am confident in my ability to explain science to non-scientists,BEFORE,Neither Agree nor Disagree,13,25
+Q25#2_9,I am confident in my ability to explain science to non-scientists,BEFORE,Agree,20,56
+Q25#2_9,I am confident in my ability to explain science to non-scientists,BEFORE,Strongly Agree,9,19
+Q25#1_9,I am confident in my ability to explain science to non-scientists,AFTER,Strongly Disagree,0,0
+Q25#1_9,I am confident in my ability to explain science to non-scientists,AFTER,Disagree,2,0
+Q25#1_9,I am confident in my ability to explain science to non-scientists,AFTER,Neither Agree nor Disagree,4,6
+Q25#1_9,I am confident in my ability to explain science to non-scientists,AFTER,Agree,19,56
+Q25#1_9,I am confident in my ability to explain science to non-scientists,AFTER,Strongly Agree,23,38
+Q25#2_10,I am confident in my ability to collaborate with others on projects,BEFORE,Strongly Disagree,1,0
+Q25#2_10,I am confident in my ability to collaborate with others on projects,BEFORE,Disagree,2,0
+Q25#2_10,I am confident in my ability to collaborate with others on projects,BEFORE,Neither Agree nor Disagree,12,25
+Q25#2_10,I am confident in my ability to collaborate with others on projects,BEFORE,Agree,24,56
+Q25#2_10,I am confident in my ability to collaborate with others on projects,BEFORE,Strongly Agree,9,19
+Q25#1_10,I am confident in my ability to collaborate with others on projects,AFTER,Strongly Disagree,0,0
+Q25#1_10,I am confident in my ability to collaborate with others on projects,AFTER,Disagree,0,0
+Q25#1_10,I am confident in my ability to collaborate with others on projects,AFTER,Neither Agree nor Disagree,5,12
+Q25#1_10,I am confident in my ability to collaborate with others on projects,AFTER,Agree,15,44
+Q25#1_10,I am confident in my ability to collaborate with others on projects,AFTER,Strongly Agree,28,44

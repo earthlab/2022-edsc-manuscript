@@ -1,0 +1,51 @@
+Item#,Item,Trial,Agreement,Count,Percentage
+Q25#2_1,"In general, being a scientist is an important part of my self-image",BEFORE,Strongly Disagree,4,9
+Q25#2_1,"In general, being a scientist is an important part of my self-image",BEFORE,Disagree,4,9
+Q25#2_1,"In general, being a scientist is an important part of my self-image",BEFORE,Neither Agree nor Disagree,13,28
+Q25#2_1,"In general, being a scientist is an important part of my self-image",BEFORE,Agree,14,30
+Q25#2_1,"In general, being a scientist is an important part of my self-image",BEFORE,Strongly Agree,11,24
+Q25#1_1,"In general, being a scientist is an important part of my self-image",AFTER,Strongly Disagree,1,2
+Q25#1_1,"In general, being a scientist is an important part of my self-image",AFTER,Disagree,2,4
+Q25#1_1,"In general, being a scientist is an important part of my self-image",AFTER,Neither Agree nor Disagree,9,20
+Q25#1_1,"In general, being a scientist is an important part of my self-image",AFTER,Agree,15,33
+Q25#1_1,"In general, being a scientist is an important part of my self-image",AFTER,Strongly Agree,19,41
+Q25#2_2,I have a strong sense of belonging to the community of scientists,BEFORE,Strongly Disagree,3,7
+Q25#2_2,I have a strong sense of belonging to the community of scientists,BEFORE,Disagree,10,22
+Q25#2_2,I have a strong sense of belonging to the community of scientists,BEFORE,Neither Agree nor Disagree,18,38
+Q25#2_2,I have a strong sense of belonging to the community of scientists,BEFORE,Agree,11,24
+Q25#2_2,I have a strong sense of belonging to the community of scientists,BEFORE,Strongly Agree,4,9
+Q25#1_2,I have a strong sense of belonging to the community of scientists,AFTER,Strongly Disagree,0,0
+Q25#1_2,I have a strong sense of belonging to the community of scientists,AFTER,Disagree,4,9
+Q25#1_2,I have a strong sense of belonging to the community of scientists,AFTER,Neither Agree nor Disagree,16,35
+Q25#1_2,I have a strong sense of belonging to the community of scientists,AFTER,Agree,15,32
+Q25#1_2,I have a strong sense of belonging to the community of scientists,AFTER,Strongly Agree,11,24
+Q25#2_3,Being a scientist is an important reflection of who I am,BEFORE,Strongly Disagree,5,11
+Q25#2_3,Being a scientist is an important reflection of who I am,BEFORE,Disagree,5,11
+Q25#2_3,Being a scientist is an important reflection of who I am,BEFORE,Neither Agree nor Disagree,15,32
+Q25#2_3,Being a scientist is an important reflection of who I am,BEFORE,Agree,12,26
+Q25#2_3,Being a scientist is an important reflection of who I am,BEFORE,Strongly Agree,9,20
+Q25#1_3,Being a scientist is an important reflection of who I am,AFTER,Strongly Disagree,0,0
+Q25#1_3,Being a scientist is an important reflection of who I am,AFTER,Disagree,3,7
+Q25#1_3,Being a scientist is an important reflection of who I am,AFTER,Neither Agree nor Disagree,12,26
+Q25#1_3,Being a scientist is an important reflection of who I am,AFTER,Agree,12,26
+Q25#1_3,Being a scientist is an important reflection of who I am,AFTER,Strongly Agree,19,41
+Q25#2_4,I have come to think of myself as a 'scientist',BEFORE,Strongly Disagree,5,11
+Q25#2_4,I have come to think of myself as a 'scientist',BEFORE,Disagree,8,17
+Q25#2_4,I have come to think of myself as a 'scientist',BEFORE,Neither Agree nor Disagree,14,30
+Q25#2_4,I have come to think of myself as a 'scientist',BEFORE,Agree,10,22
+Q25#2_4,I have come to think of myself as a 'scientist',BEFORE,Strongly Agree,9,20
+Q25#1_4,I have come to think of myself as a 'scientist',AFTER,Strongly Disagree,1,2
+Q25#1_4,I have come to think of myself as a 'scientist',AFTER,Disagree,4,9
+Q25#1_4,I have come to think of myself as a 'scientist',AFTER,Neither Agree nor Disagree,13,28
+Q25#1_4,I have come to think of myself as a 'scientist',AFTER,Agree,11,24
+Q25#1_4,I have come to think of myself as a 'scientist',AFTER,Strongly Agree,17,37
+Q25#2_5,I feel like I belong in the field of science,BEFORE,Strongly Disagree,3,7
+Q25#2_5,I feel like I belong in the field of science,BEFORE,Disagree,8,17
+Q25#2_5,I feel like I belong in the field of science,BEFORE,Neither Agree nor Disagree,14,30
+Q25#2_5,I feel like I belong in the field of science,BEFORE,Agree,11,24
+Q25#2_5,I feel like I belong in the field of science,BEFORE,Strongly Agree,10,22
+Q25#1_5,I feel like I belong in the field of science,AFTER,Strongly Disagree,0,0
+Q25#1_5,I feel like I belong in the field of science,AFTER,Disagree,3,7
+Q25#1_5,I feel like I belong in the field of science,AFTER,Neither Agree nor Disagree,7,15
+Q25#1_5,I feel like I belong in the field of science,AFTER,Agree,14,30
+Q25#1_5,I feel like I belong in the field of science,AFTER,Strongly Agree,22,48

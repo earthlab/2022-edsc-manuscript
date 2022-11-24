@@ -1,0 +1,41 @@
+Item#,Item,Comfort,Trial,Count,Percent,Percentage
+Q21#1_1,Import text files into Python,Very Comfortable,AFTER,24,0.52,52
+Q21#1_1,Import text files into Python,Moderately Comfortable,AFTER,17,0.37,37
+Q21#1_1,Import text files into Python,Slightly Comfortable,AFTER,5,0.11,11
+Q21#1_1,Import text files into Python,Not Comfortable,AFTER,0,0,0
+Q21#2_1,Import text files into Python,Very Comfortable,BEFORE,0,0,0
+Q21#2_1,Import text files into Python,Moderately Comfortable,BEFORE,1,0.02,2
+Q21#2_1,Import text files into Python,Slightly Comfortable,BEFORE,6,0.13,13
+Q21#2_1,Import text files into Python,Not Comfortable,BEFORE,39,0.85,85
+Q21#1_6,Plot data in Python with matplotlib,Very Comfortable,AFTER,23,0.5,50
+Q21#1_6,Plot data in Python with matplotlib,Moderately Comfortable,AFTER,18,0.39,39
+Q21#1_6,Plot data in Python with matplotlib,Slightly Comfortable,AFTER,5,0.11,11
+Q21#1_6,Plot data in Python with matplotlib,Not Comfortable,AFTER,0,0,0
+Q21#2_6,Plot data in Python with matplotlib,Very Comfortable,BEFORE,0,0,0
+Q21#2_6,Plot data in Python with matplotlib,Moderately Comfortable,BEFORE,1,0.02,2
+Q21#2_6,Plot data in Python with matplotlib,Slightly Comfortable,BEFORE,6,0.13,13
+Q21#2_6,Plot data in Python with matplotlib,Not Comfortable,BEFORE,39,0.85,85
+Q21#1_8,Use Python to work with time series data,Very Comfortable,AFTER,19,0.41,41
+Q21#1_8,Use Python to work with time series data,Moderately Comfortable,AFTER,14,0.3,30
+Q21#1_8,Use Python to work with time series data,Slightly Comfortable,AFTER,13,0.28,29
+Q21#1_8,Use Python to work with time series data,Not Comfortable,AFTER,0,0,0
+Q21#2_8,Use Python to work with time series data,Very Comfortable,BEFORE,0,0,0
+Q21#2_8,Use Python to work with time series data,Moderately Comfortable,BEFORE,1,0.02,2
+Q21#2_8,Use Python to work with time series data,Slightly Comfortable,BEFORE,5,0.11,11
+Q21#2_8,Use Python to work with time series data,Not Comfortable,BEFORE,40,0.87,87
+Q21#1_10,Work with spatial data in Python,Very Comfortable,AFTER,15,0.33,33
+Q21#1_10,Work with spatial data in Python,Moderately Comfortable,AFTER,16,0.35,35
+Q21#1_10,Work with spatial data in Python,Slightly Comfortable,AFTER,14,0.3,30
+Q21#1_10,Work with spatial data in Python,Not Comfortable,AFTER,1,0.02,2
+Q21#2_10,Work with spatial data in Python,Very Comfortable,BEFORE,0,0,0
+Q21#2_10,Work with spatial data in Python,Moderately Comfortable,BEFORE,2,0.04,4
+Q21#2_10,Work with spatial data in Python,Slightly Comfortable,BEFORE,4,0.09,9
+Q21#2_10,Work with spatial data in Python,Not Comfortable,BEFORE,40,0.87,87
+Q21#1_2,Summarize data in Python,Very Comfortable,AFTER,15,0.33,32
+Q21#1_2,Summarize data in Python,Moderately Comfortable,AFTER,21,0.46,46
+Q21#1_2,Summarize data in Python,Slightly Comfortable,AFTER,10,0.22,22
+Q21#1_2,Summarize data in Python,Not Comfortable,AFTER,0,0,0
+Q21#2_2,Summarize data in Python,Very Comfortable,BEFORE,0,0,0
+Q21#2_2,Summarize data in Python,Moderately Comfortable,BEFORE,1,0.02,2
+Q21#2_2,Summarize data in Python,Slightly Comfortable,BEFORE,6,0.13,13
+Q21#2_2,Summarize data in Python,Not Comfortable,BEFORE,39,0.85,85

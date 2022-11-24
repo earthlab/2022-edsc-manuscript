@@ -1,0 +1,41 @@
+Item#,Item,Trial,Confidence,Count,Percentage
+Q21#2_8,Relate results and explanations to the work of others,BEFORE,Not Confident,5,10
+Q21#2_8,Relate results and explanations to the work of others,BEFORE,Slightly Confident,20,42
+Q21#2_8,Relate results and explanations to the work of others,BEFORE,Moderately Confident,16,33
+Q21#2_8,Relate results and explanations to the work of others,BEFORE,Very Confident,7,15
+Q21#1_8,Relate results and explanations to the work of others,AFTER,Not Confident,0,0
+Q21#1_8,Relate results and explanations to the work of others,AFTER,Slightly Confident,6,12
+Q21#1_8,Relate results and explanations to the work of others,AFTER,Moderately Confident,21,44
+Q21#1_8,Relate results and explanations to the work of others,AFTER,Very Confident,21,44
+Q21#2_2,Use scientific language and terminology,BEFORE,Not Confident,7,15
+Q21#2_2,Use scientific language and terminology,BEFORE,Slightly Confident,15,31
+Q21#2_2,Use scientific language and terminology,BEFORE,Moderately Confident,20,41
+Q21#2_2,Use scientific language and terminology,BEFORE,Very Confident,6,13
+Q21#1_2,Use scientific language and terminology,AFTER,Not Confident,0,0
+Q21#1_2,Use scientific language and terminology,AFTER,Slightly Confident,3,6
+Q21#1_2,Use scientific language and terminology,AFTER,Moderately Confident,30,63
+Q21#1_2,Use scientific language and terminology,AFTER,Very Confident,15,31
+Q21#2_3,Generate a research question,BEFORE,Not Confident,4,8
+Q21#2_3,Generate a research question,BEFORE,Slightly Confident,11,23
+Q21#2_3,Generate a research question,BEFORE,Moderately Confident,25,52
+Q21#2_3,Generate a research question,BEFORE,Very Confident,8,17
+Q21#1_3,Generate a research question,AFTER,Not Confident,0,0
+Q21#1_3,Generate a research question,AFTER,Slightly Confident,3,6
+Q21#1_3,Generate a research question,AFTER,Moderately Confident,23,48
+Q21#1_3,Generate a research question,AFTER,Very Confident,22,46
+Q21#2_7,Use scientific literature and/or reports to guide research,BEFORE,Not Confident,4,8
+Q21#2_7,Use scientific literature and/or reports to guide research,BEFORE,Slightly Confident,15,31
+Q21#2_7,Use scientific literature and/or reports to guide research,BEFORE,Moderately Confident,19,40
+Q21#2_7,Use scientific literature and/or reports to guide research,BEFORE,Very Confident,10,21
+Q21#1_7,Use scientific literature and/or reports to guide research,AFTER,Not Confident,0,0
+Q21#1_7,Use scientific literature and/or reports to guide research,AFTER,Slightly Confident,2,4
+Q21#1_7,Use scientific literature and/or reports to guide research,AFTER,Moderately Confident,24,50
+Q21#1_7,Use scientific literature and/or reports to guide research,AFTER,Very Confident,22,46
+Q21#2_9,Communicate project results in an oral presentation,BEFORE,Not Confident,4,9
+Q21#2_9,Communicate project results in an oral presentation,BEFORE,Slightly Confident,17,35
+Q21#2_9,Communicate project results in an oral presentation,BEFORE,Moderately Confident,15,31
+Q21#2_9,Communicate project results in an oral presentation,BEFORE,Very Confident,12,25
+Q21#1_9,Communicate project results in an oral presentation,AFTER,Not Confident,0,0
+Q21#1_9,Communicate project results in an oral presentation,AFTER,Slightly Confident,2,4
+Q21#1_9,Communicate project results in an oral presentation,AFTER,Moderately Confident,23,48
+Q21#1_9,Communicate project results in an oral presentation,AFTER,Very Confident,23,48
