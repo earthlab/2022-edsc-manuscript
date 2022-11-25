@@ -1,0 +1,1450 @@
+---
+title: "edsc-manuscript"
+output: html_document
+date: '2022-11-24'
+---
+
+```{r read data & install libraries, fig.width = 4, fig.asp = .99, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+
+# Installing libraries
+library(TAM)
+library(WrightMap)
+library(ggplot2)
+library(ggridges)
+library(dplyr)
+library(Hmisc)
+library(Rmisc)
+library(lsr)  #to calculate Cohen's d
+library(ctv)
+library(DescTools)  #to calculate etasquared
+
+library(qualtRics)
+library(plyr)
+library(tidyverse)
+library(gridExtra)
+library(cowplot)
+library(knitr)
+library(kableExtra)
+library(magick)
+library(RColorBrewer)
+
+library(MASS)
+library(vcd)
+
+library(coin)
+
+
+# Create logo banner for plots
+earthlab_orig <- image_read(path = "earth-lab-logo-white.png") %>%
+   image_scale("x80")
+
+twitter_orig <- image_read(path = "plot-footer-twitter.png") %>%
+   image_scale("x70")
+
+black_banner <- image_read(path = "black-banner.png")
+
+earthlab_logo <- image_composite(image_scale(black_banner, "1000x100"), earthlab_orig, offset = "+30+10")
+twitter_logo <- image_composite(image_scale(black_banner, "1000x100"), twitter_orig, offset = "+540+15")
+
+logo <- image_append(image_scale(c(earthlab_logo, twitter_logo)), stack = FALSE)
+
+logo
+```
+
+### Participant Demographics
+A total of 53 consenting participants provided demographic information related to gender, race & ethnicity through a series of items included on the pre-program survey instrument, administered prior to the start of the technical workshops.
+
+```{r gender as percent ,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 7, message=FALSE, warning=FALSE}
+# Call in the data
+race_and_gender <- read.csv("20-22-race-gender.csv")
+
+# Reordering of factor levels
+race_and_gender$Q3 <- factor(race_and_gender$Q3, 
+                      level = c("Non-binary",
+                                "Male/Man",
+                                "Female/Woman"))
+
+race_and_gender$Q4 <- factor(race_and_gender$Q4, level = c("African; African American","American Indian; Alaska Native","Asian; Asian American","European; European American","Hispanic American; Latin American","Pacific Islander; Native Hawaiian"))
+
+
+
+# Make a gender plot
+# Create a plot
+gender_plot_percent <- ggplot(data=subset(race_and_gender, !is.na(Q3)), aes(Q3, group = UserLanguage, fill = UserLanguage)) + 
+  geom_bar(aes(y = (..prop..)), color='black', fill='#2ca25f') + 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels=scales::percent_format(accuracy = 1)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 15), drop=FALSE) +
+  #ylab("Relative Frequencies") +
+  theme_minimal_vgrid() +
+  #ggtitle("Gender") +
+  theme(plot.title = element_text(size=12, face="bold"),
+        axis.title.x = element_blank(),
+        axis.text.x = element_text(size = 9),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank()) +
+  coord_flip()
+
+gender_plot_percent
+
+ggsave("20-22-gender-percent.png", gender_plot_percent, height = 3, width = 4, units = "in", device = "png")
+```
+
+```{r race as percent, echo=FALSE, results=FALSE, fig.height = 6, fig.width = 7, message=FALSE, warning=FALSE}
+# Make a race plot
+race_plot <- ggplot(data=subset(race_and_gender, !is.na(Q4)), aes(Q4, group = UserLanguage, fill = UserLanguage)) + 
+  geom_bar(aes(y = (..prop..)), color='black', fill='#2ca25f') + 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)), labels=scales::percent_format(accuracy = 1)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 30), drop=FALSE, limits = rev(levels(race_and_gender$Q4))) +
+  #ylab("Relative Frequencies") +
+  theme_minimal_vgrid() +
+  ggtitle("Race & Ethnic Background") +
+  theme(plot.title = element_text(size=12, face="bold"),
+        axis.title.x = element_blank(),
+        axis.text.x = element_text(size = 9),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank()) +
+  coord_flip()
+
+race_plot
+
+ggsave("20-22-race-mnml-percent.png", race_plot, height = 4, width = 5, units = "in", device = "png")
+```
+
+***
+
+### Raw Responses (%)
+
+#### _**Python Skills**_
+```{r python comfort1 ,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-python-count-1.csv")
+
+# Reordering of factor levels
+data$Comfort <- factor(data$Comfort, 
+                      level = c("Very Comfortable",
+                                "Moderately Comfortable",
+                                "Slightly Comfortable",
+                                "Not Comfortable"))
+
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+
+data$Item <- factor(data$Item, level = c("Plot data in Python with matplotlib","Summarize data in Python","Import text files into Python","Work with spatial data in Python","Use Python to work with time series data"))
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Comfort, label = Percentage) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 36), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  #geom_text(aes(label = paste0( Percent, "%" ), y = Percent ), size = 3, color = "white" ) +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual(# "#FEE5D9" "#FCAE91" "#FB6A4A" "#CB181D"
+    values = c("Not Comfortable" = "#FEE5D9", "Slightly Comfortable" = "#FCAE91", "Moderately Comfortable" = "#FB6A4A", "Very Comfortable" = "#CB181D"), 
+    breaks = c("Not Comfortable","Slightly Comfortable","Moderately Comfortable","Very Comfortable"), 
+    labels = c("Not Comfortable","Slightly Comfortable","Moderately Comfortable","Very Comfortable")) + facet_wrap(~Trial)
+
+plot0 
+
+
+ggsave("python-comfort-2020-2022-1-percentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+```{r python comfort2 ,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-python-count-2.csv")
+
+# Reordering of factor levels
+data$Comfort <- factor(data$Comfort, 
+                      level = c("Very Comfortable",
+                                "Moderately Comfortable",
+                                "Slightly Comfortable",
+                                "Not Comfortable"))
+
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+
+data$Item <- factor(data$Item, level = c("Write functions in Python","Use loops and conditional statements to create efficient workflows","Document Python code","Manipulate data in Python","Work with tabular data in Python"))
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Comfort, label = Percentage) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 36), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual(# "#FEE5D9" "#FCAE91" "#FB6A4A" "#CB181D"
+    values = c("Not Comfortable" = "#FEE5D9", "Slightly Comfortable" = "#FCAE91", "Moderately Comfortable" = "#FB6A4A", "Very Comfortable" = "#CB181D"), 
+    breaks = c("Not Comfortable","Slightly Comfortable","Moderately Comfortable","Very Comfortable"), 
+    labels = c("Not Comfortable","Slightly Comfortable","Moderately Comfortable","Very Comfortable")) +
+  facet_wrap(~Trial)
+
+plot0 
+
+
+ggsave("python-comfort-2020-2022-2-percentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+#### _**Data Science Skills**_
+```{r data sci skills 1 ,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-data-sci-count-1.csv")
+
+# Reordering of factor levels
+data$Confidence <- factor(data$Confidence, 
+                      level = c("Very Confident",
+                                "Moderately Confident",
+                                "Slightly Confident",
+                                "Not Confident"))
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+data$Item <- factor(data$Item, level = c("I can use scientific programming to work with data","I can document code so that others can easily understand and use it","I can write efficient and modular code","I can publish my code","I can use Jupyter Notebooks"))
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Confidence, label = Percentage ) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 36), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual(# "#FEEDDE" "#FDBE85" "#FD8D3C" "#D94701"
+    values = c("Not Confident" = "#FEEDDE", "Slightly Confident" = "#FDBE85", "Moderately Confident" = "#FD8D3C", "Very Confident" = "#D94701"), 
+    breaks = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident"), 
+    labels = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident")) +
+facet_wrap(~Trial) 
+
+plot0 
+
+ggsave("data-science-skills-2020-2022-1-percentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+```{r data sci skills 2 ,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-data-sci-count-2.csv")
+
+# Reordering of factor levels
+data$Confidence <- factor(data$Confidence, 
+                      level = c("Very Confident",
+                                "Moderately Confident",
+                                "Slightly Confident",
+                                "Not Confident"))
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+data$Item <- factor(data$Item, level = c("I can visualize scientific data","I can draw analytical conclusions from data","I can find and access data","I can create reproducible workflows","I can use remote sensing data"))
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Confidence, label = Percentage) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 36), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual(# "#FEE5D9" "#FCAE91" "#FB6A4A" "#CB181D"
+    values = c("Not Confident" = "#FEEDDE", "Slightly Confident" = "#FDBE85", "Moderately Confident" = "#FD8D3C", "Very Confident" = "#D94701"), 
+    breaks = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident"), 
+    labels = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident")) +
+facet_wrap(~Trial) 
+
+plot0 
+
+ggsave("data-science-skills-2020-2022-2-percentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+
+#### _**Data Science Communication**_
+```{r sci comms1,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-data-comms-count-1.csv")
+
+# Reordering of factor levels
+data$Agreement <- factor(data$Agreement, 
+                      level = c("Strongly Agree",
+                                "Agree",
+                                "Neither Agree nor Disagree",
+                                "Disagree",
+                                "Strongly Disagree"))
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+data$Item <- factor(data$Item, level = c("I am confident I can communicate about science by writing blogs","With enough time I feel I can learn new programming languages","I know how to document formulas/code so others can understand and use it","I am comfortable writing code to analyze data","I can create plots and maps to visualize data using Python"))
+
+# Hexadecimal color specification for n=5 YlGnBu Brewer Palette
+#brewer.pal(n = 11, name = "PRGn")
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Agreement, label = Percentage ) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 36), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  #theme_minimal_vgrid() + 
+  #theme_minimal() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  #geom_text( aes( label = paste0( Percent, "%" ), y = Percent ), size = 3, color = "white" ) +
+  #ea_theme() +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      #panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual(
+    values = c("Strongly Disagree" = "#edf8fb", "Disagree" = "#b2e2e2", "Neither Agree nor Disagree" = "#66c2a4", "Agree" = "#2ca25f", "Strongly Agree" = "#006d2c"), 
+    breaks = c("Strongly Disagree","Disagree","Neither Agree nor Disagree","Agree","Strongly Agree"), 
+    labels = c("Strongly Disgree","Disgree","Neither Agree nor Disagree","Agree","Strongly Agree")) +
+facet_wrap(~Trial) 
+
+plot0 
+
+ggsave("data-science-communication-2020-2022-1-precentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+```{r sci comms2,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-data-comms-count-2.csv")
+
+# Reordering of factor levels
+data$Agreement <- factor(data$Agreement, 
+                      level = c("Strongly Agree",
+                                "Agree",
+                                "Neither Agree nor Disagree",
+                                "Disagree",
+                                "Strongly Disagree"))
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+data$Item <- factor(data$Item, level = c("I feel comfortable using data in spreadsheets","I am confident in my ability to collaborate with others on projects","I am confident in my ability to explain science to non-scientists","When I write about science, I can present my ideas clearly","I am comfortable analyzing data"))
+
+# Hexadecimal color specification for n=5 YlGnBu Brewer Palette
+#brewer.pal(n = 11, name = "PRGn")
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Agreement, label = Percentage ) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 36), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  #theme_minimal_vgrid() + 
+  #theme_minimal() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  #geom_text( aes( label = paste0( Percent, "%" ), y = Percent ), size = 3, color = "white" ) +
+  #ea_theme() +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      #panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual(
+    values = c("Strongly Disagree" = "#edf8fb", "Disagree" = "#b2e2e2", "Neither Agree nor Disagree" = "#66c2a4", "Agree" = "#2ca25f", "Strongly Agree" = "#006d2c"), 
+    breaks = c("Strongly Disagree","Disagree","Neither Agree nor Disagree","Agree","Strongly Agree"), 
+    labels = c("Strongly Disgree","Disgree","Neither Agree nor Disagree","Agree","Strongly Agree")) +
+facet_wrap(~Trial) 
+
+plot0 
+
+ggsave("data-science-communication-2020-2022-2-percentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+
+#### _**Data Science Practices**_
+```{r sci prac1, echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-sci-pract-count-1.csv")
+
+# Reordering of factor levels
+data$Confidence <- factor(data$Confidence, 
+                      level = c("Very Confident",
+                                "Moderately Confident",
+                                "Slightly Confident",
+                                "Not Confident"))
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+data$Item <- factor(data$Item, level = c("Describe the results of your data processing as it relates to your science question","Communicate project results in a blog format","Find the data that you need to address a science question","Figure out how the data that you've downloaded for a project can be used to address your science question","Use technical science skills (such as tools, instruments, and techniques)"))
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Confidence, label = Percentage ) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 40), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  #theme_minimal_vgrid() + 
+  #theme_minimal() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  #geom_text( aes( label = paste0( Percent, "%" ), y = Percent ), size = 3, color = "white" ) +
+  #ea_theme() +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      #panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual( # "#EFF3FF" "#BDD7E7" "#6BAED6" "#2171B5"
+    values = c("Not Confident" = "#EFF3FF", "Slightly Confident" = "#BDD7E7", "Moderately Confident" = "#6BAED6", "Very Confident" = "#2171B5"), 
+    breaks = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident"), 
+    labels = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident")) +
+facet_wrap(~Trial) 
+
+plot0 
+
+
+ggsave("science-practices-2020-2022-1-percentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+```{r sci prac2, echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-sci-pract-count-2.csv")
+
+# Reordering of factor levels
+data$Confidence <- factor(data$Confidence, 
+                      level = c("Very Confident",
+                                "Moderately Confident",
+                                "Slightly Confident",
+                                "Not Confident"))
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+data$Item <- factor(data$Item, level = c("Generate a research question","Use scientific literature and/or reports to guide research","Communicate project results in an oral presentation","Relate results and explanations to the work of others","Use scientific language and terminology"))
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Confidence, label = Percentage ) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 40), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  #theme_minimal_vgrid() + 
+  #theme_minimal() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  #geom_text( aes( label = paste0( Percent, "%" ), y = Percent ), size = 3, color = "white" ) +
+  #ea_theme() +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      #panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual( # "#EFF3FF" "#BDD7E7" "#6BAED6" "#2171B5"
+    values = c("Not Confident" = "#EFF3FF", "Slightly Confident" = "#BDD7E7", "Moderately Confident" = "#6BAED6", "Very Confident" = "#2171B5"), 
+    breaks = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident"), 
+    labels = c("Not Confident","Slightly Confident","Moderately Confident","Very Confident")) +
+facet_wrap(~Trial) 
+
+plot0 
+
+
+ggsave("science-practices-2020-2022-2-percentage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+
+#### _**Science Identity**_
+```{r science identity,echo=FALSE, results=FALSE, fig.height = 5, fig.width = 10, message=FALSE}
+# Call in the data
+data <- read.csv("20-22-sci-identity-count.csv")
+
+# Reordering of factor levels
+data$Agreement <- factor(data$Agreement, 
+                      level = c("Strongly Agree",
+                                "Agree",
+                                "Neither Agree nor Disagree",
+                                "Disagree",
+                                "Strongly Disagree"))
+
+data$Trial <- factor(data$Trial, 
+                      level = c("BEFORE",
+                                "AFTER"))
+
+data$Item <- factor(data$Item, level = c("I feel like I belong in the field of science","I have a strong sense of belonging to the community of scientists","In general, being a scientist is an important part of my self-image","Being a scientist is an important reflection of who I am","I have come to think of myself as a 'scientist'"))
+
+# Make a plot
+plot0 <-  ggplot(data, aes(x = Item, y = Percentage, fill = Agreement, label = Percentage ) ) +
+  geom_bar(stat = "identity", position = "stack", width=0.95) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 40), drop = TRUE, expand = expansion(mult = c(0.15, 0.15))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0))) +
+  coord_flip() +
+  #theme_minimal_vgrid() + 
+  #theme_minimal() +
+  theme_bw() +
+  geom_text(data = subset(data, Percentage != 0), size = 4, position = position_stack(vjust = 0.5), color = 'black') +
+  #geom_text( aes( label = paste0( Percent, "%" ), y = Percent ), size = 3, color = "white" ) +
+  #ea_theme() +
+  theme(plot.margin=unit(c(0.25,0.3,0.1,0.25),"cm"),
+        axis.title.y = element_blank(),
+      legend.position = "top",
+      panel.spacing = unit(0.5, "lines"),
+      plot.caption = element_text(margin = margin(t = 0, r = 10, b = 0, l = 10), 
+                                      size = 6, color = "gray38", hjust = 1),
+      legend.title = element_blank(),
+      legend.text = element_text(size = 11),
+      plot.title = element_text(size=12, face="italic"),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 12, color = 'black'),
+      axis.ticks = element_blank(),
+      #panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      strip.text.x = element_text(size=18, face="bold")) +
+scale_fill_manual( # "#F2F0F7" "#CBC9E2" "#9E9AC8" "#756BB1" "#54278F"
+    values = c("Strongly Disagree" = "#F2F0F7", "Disagree" = "#CBC9E2", "Neither Agree nor Disagree" = "#9E9AC8", "Agree" = "#756BB1", "Strongly Agree" = "#54278F"), 
+    breaks = c("Strongly Disagree","Disagree","Neither Agree nor Disagree","Agree","Strongly Agree"), 
+    labels = c("Strongly Disgree","Disgree","Neither Agree nor Disagree","Agree","Strongly Agree")) +
+facet_wrap(~Trial) 
+
+plot0 
+
+ggsave("science-identity-2020-2022-percenatage.png", plot0, height = 5, width = 10, units = "in", device = "png")
+```
+
+***
+
+### Rasch Modeling
+#### _**Python Skills**_
+```{r build comfort rasch models tech, fig.width = 3, fig.asp = .67, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE, include = FALSE}
+python_comf_num <- read.csv("20-22-python-skills-num.csv")
+
+
+pythoncomfortpre <- tam.mml(resp = python_comf_num[,2:11], pid = python_comf_num[,1], irtmodel = "RSM")
+
+summary(pythoncomfortpre)
+
+diffPRE <- pythoncomfortpre$xsi$xsi 
+summary(diffPRE)
+diffanchor <- cbind(1:(length(diffPRE)),diffPRE)
+
+
+pythoncomfortpost <- tam.mml(resp = python_comf_num[,12:21], pid = python_comf_num[,1], irtmodel = "RSM", xsi.fixed = diffanchor)
+
+summary(pythoncomfortpost)
+
+
+fitpre <- tam.fit(pythoncomfortpre)  # this assigns the fit to an object called fit
+summary(fitpre)
+write.csv(fitpre$itemfit$Infit, "python-fit-pre.csv")
+avg_fit_pre <- mean(fitpre$itemfit$Infit[1:10])
+avg_fit_pre
+
+fitpost <- tam.fit(pythoncomfortpost)  # this assigns the fit to an object called fit
+summary(fitpost)
+write.csv(fitpost$itemfit$Infit, "python-fit-post.csv")
+avg_fit_post <- mean(fitpost$itemfit$Infit[1:10])
+avg_fit_post
+
+
+abilitypreconf <- tam.wle(pythoncomfortpre)
+abilpreconf <- abilitypreconf$theta
+summary(abilpreconf)
+
+plot(abilpreconf)
+hist(abilpreconf)
+mean(abilpreconf)
+write.csv(abilpreconf, "pythonabilpre.csv")
+
+abilitypostconf <- tam.wle(pythoncomfortpost)
+abilpostconf <- abilitypostconf$theta
+summary(abilpostconf)
+hist(abilpostconf)
+mean(abilpostconf)
+write.csv(abilpostconf, "pythonabilpost.csv")
+
+thresholdspreconf <- tam.threshold(pythoncomfortpre)
+thresholdspostconf <- tam.threshold(pythoncomfortpost)
+summary(thresholdspostconf)
+
+
+# Trying to remove the Cat1 column to clean up WrightMap
+thresholdspostconf[,1]<-NA  ####Removes Category 1 (Typically don't need to do this)
+thresholdspostconf
+
+thresholdspreconf[,1]<-NA
+thresholdspreconf
+
+# Trying a quick WrightMap using another approach
+
+#IRT.WrightMap(pythoncomfortpost, show.thr.lab=FALSE, main.title = "Python Comfort (POST) Wright Map")
+
+# playing with $xsi
+#py_comf <- pythoncomfortpost$xsi
+#view(py_comf)
+```
+
+```{r build comfort Wright Maps tech, fig.width = 4.7, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+wrightmappreconf <- wrightMap(abilpreconf, thresholdspostconf, item.side = itemClassic,
+                        dim.names = "",
+                        main.title = "Python Skills (BEFORE)",
+                        axis.persons = "",
+                        axis.items = "Item Distriubtion",
+                        thr.sym.cex = 0.75,
+                        thr.lab.cex = 0.3)
+
+
+wrightmappostconf <- wrightMap(abilpostconf, thresholdspostconf, item.side = itemClassic,
+                          dim.names = "",
+                          main.title = "Python Skills (AFTER)",
+                          axis.persons = "",
+                          axis.items = "Item Distriubtion",
+                          thr.sym.cex = 0.75,
+                          thr.lab.cex = 0.3)
+```
+
+
+#### _**Data Science Skills**_
+```{r build confidence rasch models tech, fig.width = 3, fig.asp = .67, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE, include = FALSE}
+data_conf_num <- read.csv("20-22-data-sci-skills-num.csv")
+
+
+dataconfidencepre <- tam.mml(resp = data_conf_num[,12:21], pid = data_conf_num[,1], irtmodel = "RSM")
+
+summary(dataconfidencepre)
+
+diffPRE <- dataconfidencepre$xsi$xsi 
+diffanchor <- cbind(1:(length(diffPRE)),diffPRE)
+
+
+dataconfidencepost <- tam.mml(resp = data_conf_num[,2:11], pid = data_conf_num[,1], irtmodel = "RSM", xsi.fixed = diffanchor)
+
+summary(dataconfidencepost)
+
+fitpre <- tam.fit(dataconfidencepre)  # this assigns the fit to an object called fit
+summary(fitpre)
+write.csv(fitpre$itemfit$Infit, "datasci-fit-pre.csv")
+avg_fit_pre <- mean(fitpre$itemfit$Infit[1:10])
+avg_fit_pre
+
+
+fitpost <- tam.fit(dataconfidencepost)  # this assigns the fit to an object called fit
+summary(fitpost)
+write.csv(fitpost$itemfit$Infit, "datasci-fit-post.csv")
+avg_fit_post <- mean(fitpost$itemfit$Infit[1:10])
+avg_fit_post
+
+
+abilitypreconf <- tam.wle(dataconfidencepre)
+abilpreconf <- abilitypreconf$theta
+write.csv(abilpreconf, "dataconfidencepre.csv")
+summary(abilpreconf)
+
+abilitypostconf <- tam.wle(dataconfidencepost)
+abilpostconf <- abilitypostconf$theta
+write.csv(abilpostconf, "dataconfidencepost.csv")
+summary(abilpostconf)
+
+thresholdspreconf <- tam.threshold(dataconfidencepre)
+thresholdspostconf <- tam.threshold(dataconfidencepost)
+
+# Dropping Cat1
+thresholdspreconf[,1] <- NA
+thresholdspostconf[,1] <- NA
+```
+
+```{r build confidence Wright Maps tech, fig.width = 4.7, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+wrightmappreconf <- wrightMap(abilpreconf, thresholdspostconf, item.side = itemClassic,
+                        dim.names = "",
+                        main.title = "Data Science Skills (BEFORE)",
+                        axis.persons = "",
+                        axis.items = "Item Distriubtion",
+                        thr.sym.cex = 0.75,
+                        thr.lab.cex = 0.3)
+
+
+
+wrightmappostconf <- wrightMap(abilpostconf, thresholdspostconf, item.side = itemClassic,
+                          dim.names = "",
+                          main.title = "Data Science Skills (AFTER)",
+                          axis.persons = "",
+                          axis.items = "Item Distriubtion",
+                          thr.sym.cex = 0.75,
+                          thr.lab.cex = 0.3)
+
+
+```
+
+
+#### _**Data Science Communication**_
+```{r build comfort rasch models, fig.width = 3, fig.asp = .67, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE, include = FALSE}
+
+data_comm_num <- read.csv("20-22-data-comms-num.csv")
+
+comfortpre <- tam.mml(resp = data_comm_num[,12:21], pid = data_comm_num[,1], irtmodel = "RSM")
+summary(comfortpre)
+summary(comfortpre$xsi)
+summary(comfortpre$xsi$xsi)
+
+diffPRE <- comfortpre$xsi$xsi 
+diffanchor <- cbind(1:(length(diffPRE)),diffPRE)
+
+comfortpost <- tam.mml(resp = data_comm_num[,2:11], pid = data_comm_num[,1], irtmodel = "RSM", xsi.fixed = diffanchor)
+summary(comfortpost)
+
+fitpre <- tam.fit(comfortpre)  # this assigns the fit to an object called fit
+summary(fitpre)
+
+avg_fit_pre <- mean(fitpre$itemfit$Infit[1:10])
+avg_fit_pre
+
+
+
+fitpost <- tam.fit(comfortpost)  # this assigns the fit to an object called fit
+summary(fitpost)
+
+avg_fit_post <- mean(fitpost$itemfit$Infit[1:10])
+avg_fit_post
+
+
+abilityprecomf <- tam.wle(comfortpre)
+abilprecomf <- abilityprecomf$theta
+write.csv(abilprecomf, "comfort-pre2.csv")
+summary(abilprecomf)
+
+abilitypostcomf <- tam.wle(comfortpost)
+abilpostcomf <- abilitypostcomf$theta
+write.csv(abilpostcomf, "comfort-post2.csv")
+summary(abilpostcomf)
+
+thresholdsprecomf <- tam.threshold(comfortpre)
+thresholdspostcomf <- tam.threshold(comfortpost)
+
+# Dropping Cat1
+thresholdsprecomf[,1] <- NA
+thresholdspostcomf[,1] <- NA
+```
+
+```{r build comfort Wright Maps, fig.width = 4.7, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+wrightmapprecomf <- wrightMap(abilprecomf, thresholdsprecomf, item.side = itemClassic,
+                          dim.names = "",
+                          main.title = "Data Science Communication (BEFORE)",
+                          axis.persons = "",
+                          axis.items = "Item Distriubtion",
+                          thr.sym.cex = 0.75,
+                          thr.lab.cex = 0.3)
+
+
+wrightmappostcomf <- wrightMap(abilpostcomf, thresholdspostcomf, item.side = itemClassic,
+                           dim.names = "",
+                           main.title = "Data Science Communication (AFTER)",
+                           axis.persons = "",
+                           axis.items = "Item Distriubtion",
+                           thr.sym.cex = 0.75,
+                           thr.lab.cex = 0.3)
+
+
+
+
+```
+
+#### _**Data Science Practices**_
+```{r build confidence rasch models, fig.width = 3, fig.asp = .67, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE, include = FALSE}
+sci_prac_num <- read.csv("20-22-sci-practices-num.csv")
+
+confidencepre <- tam.mml(resp = sci_prac_num[,12:21], pid = sci_prac_num[,1], irtmodel = "RSM")
+summary(confidencepre)
+
+diffPRE <- confidencepre$xsi$xsi 
+diffanchor <- cbind(1:(length(diffPRE)),diffPRE)
+
+
+confidencepost <- tam.mml(resp = sci_prac_num[,2:11], pid = sci_prac_num[,1], irtmodel = "RSM", xsi.fixed = diffanchor)
+summary(confidencepost)
+confidencepost$xsi
+
+fitpre <- tam.fit(confidencepre)  # this assigns the fit to an object called fit
+summary(fitpre)
+write.csv(fitpre$itemfit$Infit, "scipract-fit-pre.csv")
+avg_fit_pre <- mean(fitpre$itemfit$Infit[1:10])
+avg_fit_pre
+
+fitpost <- tam.fit(confidencepost)  # this assigns the fit to an object called fit
+summary(fitpost)
+write.csv(fitpost$itemfit$Infit, "scipract-fit-post.csv")
+avg_fit_post <- mean(fitpost$itemfit$Infit[1:10])
+avg_fit_post
+
+abilitypreconf <- tam.wle(confidencepre)
+abilpreconf <- abilitypreconf$theta
+write.csv(abilpreconf, "confidencepre2.csv")
+summary(abilpreconf)
+
+abilitypostconf <- tam.wle(confidencepost)
+abilpostconf <- abilitypostconf$theta
+write.csv(abilpostconf, "confidencepost2.csv")
+summary(abilpostconf)
+
+thresholdspreconf <- tam.threshold(confidencepre)
+thresholdspostconf <- tam.threshold(confidencepost)
+
+# Dropping Cat1
+thresholdspreconf[,1] <- NA
+thresholdspostconf[,1] <- NA
+```
+
+```{r build confidence Wright Maps, fig.width = 4.7, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+wrightmappreconf <- wrightMap(abilpreconf, thresholdspreconf, item.side = itemClassic,
+                        dim.names = "",
+                        main.title = "Data Science Practices (BEFORE)",
+                        axis.persons = "",
+                        axis.items = "Item Distriubtion",
+                        thr.sym.cex = 0.75,
+                        thr.lab.cex = 0.3)
+
+
+wrightmappostconf <- wrightMap(abilpostconf, thresholdspostconf, item.side = itemClassic,
+                          dim.names = "",
+                          main.title = "Data Science Practices (AFTER)",
+                          axis.persons = "",
+                          axis.items = "Item Distriubtion",
+                          thr.sym.cex = 0.75,
+                          thr.lab.cex = 0.3)
+```
+
+#### _**Science Identity**_
+```{r build science identity Rasch models, fig.width = 3, fig.asp = .67, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE, include = FALSE }
+science_id_num <- read.csv("20-22-science-identity-num.csv")
+
+identitypre <- tam.mml(resp = science_id_num[,7:11], pid = science_id_num[,1], irtmodel = "RSM")
+
+summary(identitypre)
+
+diffPRE <- identitypre$xsi$xsi 
+diffanchor <- cbind(1:(length(diffPRE)),diffPRE)
+
+
+identitypost <- tam.mml(resp = science_id_num[,2:6], pid = science_id_num[,1], irtmodel = "RSM", xsi.fixed = diffanchor)
+
+summary(identitypost)
+
+fitpre <- tam.fit(identitypre)  # this assigns the fit to an object called fit
+
+fitpre_df <- as.data.frame(fitpre$itemfit)
+#View(fitpre$itemfit)
+summary(fitpre_df)
+write.csv(fitpre$itemfit$Infit, "sciID-fit-pre.csv")
+avg_fit_pre <- mean(fitpre$itemfit$Infit[1:5])
+avg_fit_pre
+
+
+
+fitpost <- tam.fit(identitypost)  # this assigns the fit to an object called fit
+summary(fitpost)
+write.csv(fitpost$itemfit$Infit, "sciID-fit-post.csv")
+avg_fit_post <- mean(fitpost$itemfit$Infit[1:5])
+avg_fit_post
+
+
+
+abilitypreident <- tam.wle(identitypre)
+abilpreident <- abilitypreident$theta
+write.csv(abilpreident, "identity-pre2.csv")
+summary(abilpreident)
+
+abilitypostident <- tam.wle(identitypost)
+abilpostident <- abilitypostident$theta
+write.csv(abilpostident, "identity-post2.csv")
+summary(abilpostident)
+
+thresholdspreident <- tam.threshold(identitypre)
+
+thresholdspostident <- tam.threshold(identitypost)
+
+# Dropping Cat1
+thresholdspreident[,1] <- NA
+thresholdspostident[,1] <- NA
+
+```
+
+```{r build science identity Wright Maps, fig.width = 4.7, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+wrightmappreident <- wrightMap(abilpreident, thresholdspreident, item.side = itemClassic,
+                          dim.names = "",
+                          main.title = "Science Identity (BEFORE)",
+                          axis.persons = "",
+                          axis.items = "Item Distriubtion",
+                          thr.sym.cex = 0.75,
+                          thr.lab.cex = 0.3)
+
+
+wrightmappostident <- wrightMap(abilpostident, thresholdspostident, item.side = itemClassic,
+                           dim.names = "",
+                           main.title = "Science Identity (AFTER)",
+                           axis.persons = "",
+                           axis.items = "Item Distriubtion",
+                           thr.sym.cex = 0.75,
+                           thr.lab.cex = 0.3)
+
+```
+
+***
+
+### Analysis of Variance
+```{r ANOVA, results='markup', echo=FALSE, tidy=TRUE}
+abil_trial_dimension_all6 <- read.csv("20-22-ability-trial-dimension-cohort.csv")
+
+model <- lm(Ability ~ Trial + Dimension + Cohort + Cohort*Dimension, abil_trial_dimension_all6)
+summary(model)
+anova(model)
+EtaSq(model, type = 2)
+```
+
+### _t_-testing
+```{r filtering, include=FALSE}
+# Cohort
+yr1 <- filter(abil_trial_dimension_all6, Cohort == "Year 1")
+yr1
+
+yr2 <- filter(abil_trial_dimension_all6, Cohort == "Year 2")
+yr2
+
+yr3 <- filter(abil_trial_dimension_all6, Cohort == "Year 3")
+yr3
+
+# trial
+pre <- filter(abil_trial_dimension_all6, Trial =="Before")
+pre
+
+post <- filter(abil_trial_dimension_all6, Trial =="After")
+post
+
+# Data & Comms pre/post
+comfortpre <- filter(pre, Dimension == "Data Science Communication")
+comfortpre
+
+comfortpost <- filter(post, Dimension == "Data Science Communication")
+comfortpost
+
+# Science Practices pre/post
+confpre <- filter(pre, Dimension == "Data Science Practices")
+confpre
+
+confpost <- filter(post, Dimension == "Data Science Practices")
+confpost
+
+# science identity pre/post
+idpre <- filter(pre, Dimension == "Science Identity")
+idpre
+
+idpost <- filter(post, Dimension == "Science Identity")
+idpost
+
+
+# Data Science Skills pre/post
+techconfpre <- filter(pre, Dimension == "Data Science Skills")
+techconfpre
+
+techconfpost <- filter(post, Dimension == "Data Science Skills")
+techconfpost
+
+
+# Python Skills pre/post
+techcomfortpre <- filter(pre, Dimension == "Python Skills")
+techcomfortpre
+
+techcomfortpost <- filter(post, Dimension == "Python Skills")
+techcomfortpost
+
+
+abil_trial_dimension_all6$Trial <- factor(abil_trial_dimension_all6$Trial, 
+                      level = c("Before",
+                                "After"))
+
+
+p <- ggplot(abil_trial_dimension_all6, aes(x=Dimension, y=Ability)) + 
+  geom_boxplot() +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 5)) +
+  theme(axis.title.x = element_blank()) + 
+  facet_wrap(~ Trial) +
+  labs(y = "Ability (logits)")
+
+p
+
+```
+
+
+#### _**Data Science Communication**_
+```{r t testing - data & communication, echo=FALSE}
+t.test(comfortpost$Ability, comfortpre$Ability)
+cohensD(comfortpost$Ability, comfortpre$Ability)
+```
+
+
+#### _**Data Science Communication by Year**_
+```{r}
+# science identity pre by year
+ds_comms_pre1 <- filter(comfortpre, Cohort == "Year 1")
+ds_comms_pre1
+
+ds_comms_pre2 <- filter(comfortpre, Cohort == "Year 2")
+ds_comms_pre2
+
+ds_comms_pre3 <- filter(comfortpre, Cohort == "Year 3")
+ds_comms_pre3
+
+
+
+# science identity post by year
+ds_comms_post1 <- filter(comfortpost, Cohort == "Year 1")
+ds_comms_post1
+
+ds_comms_post2 <- filter(comfortpost, Cohort == "Year 2")
+ds_comms_post2
+
+ds_comms_post3 <- filter(comfortpost, Cohort == "Year 3")
+ds_comms_post3
+
+
+# t-testing data science practices by year
+# Year 1
+t.test(ds_comms_post1$Ability, ds_comms_pre1$Ability)
+cohensD(ds_comms_post1$Ability, ds_comms_pre1$Ability)
+
+
+# Year 2
+t.test(ds_comms_post2$Ability, ds_comms_pre2$Ability)
+cohensD(ds_comms_post2$Ability, ds_comms_pre2$Ability)
+
+
+# Year 3
+t.test(ds_comms_post3$Ability, ds_comms_pre3$Ability)
+cohensD(ds_comms_post3$Ability, ds_comms_pre3$Ability)
+```
+
+
+***
+
+#### _**Data Science Practices**_
+```{r t testing - science practices, echo=FALSE}
+t.test(confpost$Ability, confpre$Ability)
+cohensD(confpost$Ability, confpre$Ability)
+```
+
+#### _**Data Science Practices by Year**_
+```{r}
+# science identity pre by year
+ds_pract_pre1 <- filter(confpre, Cohort == "Year 1")
+ds_pract_pre1
+
+ds_pract_pre2 <- filter(confpre, Cohort == "Year 2")
+ds_pract_pre2
+
+ds_pract_pre3 <- filter(confpre, Cohort == "Year 3")
+ds_pract_pre3
+
+
+
+# science identity post by year
+ds_pract_post1 <- filter(confpost, Cohort == "Year 1")
+ds_pract_post1
+
+ds_pract_post2 <- filter(confpost, Cohort == "Year 2")
+ds_pract_post2
+
+ds_pract_post3 <- filter(confpost, Cohort == "Year 3")
+ds_pract_post3
+
+
+# t-testing data science practices by year
+# Year 1
+t.test(ds_pract_post1$Ability, ds_pract_pre1$Ability)
+cohensD(ds_pract_post1$Ability, ds_pract_pre1$Ability)
+
+
+# Year 2
+t.test(ds_pract_post2$Ability, ds_pract_pre2$Ability)
+cohensD(ds_pract_post2$Ability, ds_pract_pre2$Ability)
+
+
+# Year 3
+t.test(ds_pract_post3$Ability, ds_pract_pre3$Ability)
+cohensD(ds_pract_post3$Ability, ds_pract_pre3$Ability)
+```
+
+***
+
+#### _**Science Identity**_
+```{r t testing - science identity, echo=FALSE}
+t.test(idpost$Ability, idpre$Ability)
+cohensD(idpost$Ability, idpre$Ability)
+```
+
+#### _**Science Identity by Year**_
+```{r t testing - science identity by year}
+# science identity pre by year
+idpre1 <- filter(idpre, Cohort == "Year 1")
+idpre1
+
+idpre2 <- filter(idpre, Cohort == "Year 2")
+idpre2
+
+idpre3 <- filter(idpre, Cohort == "Year 3")
+idpre3
+
+
+
+# science identity post by year
+idpost1 <- filter(idpost, Cohort == "Year 1")
+idpost1
+
+idpost2 <- filter(idpost, Cohort == "Year 2")
+idpost2
+
+idpost3 <- filter(idpost, Cohort == "Year 3")
+idpost3
+
+
+# t-testing science identity by year
+# Year 1
+t.test(idpost1$Ability, idpre1$Ability)
+cohensD(idpost1$Ability, idpre1$Ability)
+
+
+# Year 2
+t.test(idpost2$Ability, idpre2$Ability)
+cohensD(idpost2$Ability, idpre2$Ability)
+
+
+# Year 3
+t.test(idpost3$Ability, idpre3$Ability)
+cohensD(idpost3$Ability, idpre3$Ability)
+
+
+# Year 3 vs. 1
+t.test(idpost3$Ability, idpost1$Ability)
+cohensD(idpost3$Ability, idpre1$Ability)
+
+
+# Looking at differences in growth across the three cohorts
+sci_id_growth <- read.csv("sci-id-growth.csv")
+sci_id_growth
+
+sci_id_growth1 <- filter(sci_id_growth, Cohort == "Year 1")
+sci_id_growth1
+
+sci_id_growth2 <- filter(sci_id_growth, Cohort == "Year 2")
+sci_id_growth2
+
+sci_id_growth3 <- filter(sci_id_growth, Cohort == "Year 3")
+sci_id_growth3
+
+# t-testing for differences in growth
+# Year 2 vs. Year 1
+t.test(sci_id_growth2$Diff, sci_id_growth1$Diff)
+
+# Year 3 vs. Year 1
+t.test(sci_id_growth3$Diff, sci_id_growth1$Diff)
+cohensD(sci_id_growth3$Diff, sci_id_growth1$Diff)
+```
+
+
+***
+
+#### _**Data Science Skills**_
+```{r t testing - python skills, echo=FALSE}
+t.test(techconfpost$Ability, techconfpre$Ability)
+cohensD(techconfpost$Ability, techconfpre$Ability)
+```
+
+
+
+#### _**Data Science Skills by Year**_
+```{r t testing - data science skills by year}
+# science identity pre by year
+ds_skills_pre1 <- filter(techconfpre, Cohort == "Year 1")
+ds_skills_pre1
+
+ds_skills_pre2 <- filter(techconfpre, Cohort == "Year 2")
+ds_skills_pre2
+
+ds_skills_pre3 <- filter(techconfpre, Cohort == "Year 3")
+ds_skills_pre3
+
+
+
+# science identity post by year
+ds_skills_post1 <- filter(techconfpost, Cohort == "Year 1")
+ds_skills_post1
+
+ds_skills_post2 <- filter(techconfpost, Cohort == "Year 2")
+ds_skills_post2
+
+ds_skills_post3 <- filter(techconfpost, Cohort == "Year 3")
+ds_skills_post3
+
+
+# t-testing science identity by year
+# Year 1
+t.test(ds_skills_post1$Ability, ds_skills_pre1$Ability)
+cohensD(ds_skills_post1$Ability, ds_skills_pre1$Ability)
+
+
+# Year 2
+t.test(ds_skills_post2$Ability, ds_skills_pre2$Ability)
+cohensD(ds_skills_post2$Ability, ds_skills_pre2$Ability)
+
+
+# Year 3
+t.test(ds_skills_post3$Ability, ds_skills_pre3$Ability)
+cohensD(ds_skills_post3$Ability, ds_skills_pre3$Ability)
+```
+
+***
+
+#### _**Python Skills**_
+```{r t testing - data science skills, echo=FALSE}
+t.test(techcomfortpost$Ability, techcomfortpre$Ability)
+cohensD(techcomfortpost$Ability, techcomfortpre$Ability)
+```
+
+
+#### _**Python Skills by Year**_
+```{r t testing - python skills by year}
+# science identity pre by year
+python_pre1 <- filter(techcomfortpre, Cohort == "Year 1")
+python_pre1
+
+python_pre2 <- filter(techcomfortpre, Cohort == "Year 2")
+python_pre2
+
+python_pre3 <- filter(techcomfortpre, Cohort == "Year 3")
+python_pre3
+
+
+
+# science identity post by year
+python_post1 <- filter(techcomfortpost, Cohort == "Year 1")
+python_post1
+
+python_post2 <- filter(techcomfortpost, Cohort == "Year 2")
+python_post2
+
+python_post3 <- filter(techcomfortpost, Cohort == "Year 3")
+python_post3
+
+
+# t-testing science identity by year
+# Year 1
+t.test(python_post1$Ability, python_pre1$Ability)
+cohensD(python_post1$Ability, python_pre1$Ability)
+
+
+# Year 2
+t.test(python_post2$Ability, python_pre2$Ability)
+cohensD(python_post2$Ability, python_pre2$Ability)
+
+
+# Year 3
+t.test(python_post3$Ability, python_pre3$Ability)
+cohensD(python_post3$Ability, python_pre3$Ability)
+
+
+# Year 3 vs. 1 (PRE)
+t.test(python_pre3$Ability, python_pre1$Ability)
+t.test(python_pre2$Ability, python_pre1$Ability)
+cohensD(idpost3$Ability, idpre1$Ability)
+```
+
+***
+
+### _**Growth across the five dimensions**_
+```{r build growth in ability plot, fig.width = 12, fig.height = 6, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+abil_trial_dimension_all6$Trial <- factor(abil_trial_dimension_all6$Trial, levels = c("Before","After"))
+
+tgc4 <- summarySE(abil_trial_dimension_all6, measurevar="Ability", groupvars=c("Trial","Dimension"))   ##Creates a summary of the data
+
+pd2 <- position_dodge(0.1) # move/dodge them .1 to the left and right
+
+
+growth_plot <- ggplot(tgc4, aes(x=Trial, y=Ability, color=Dimension, group=Dimension)) + 
+  geom_errorbar(aes(ymin=Ability-se, ymax=Ability+se), colour="black", width=.1, position=pd2) +
+  theme_bw() +
+  #ggtitle("Growth Across the Five Dimensions") +
+  geom_line(position = pd2, lty = "solid", size = 1.5, alpha = 0.8) +
+  geom_point(position = pd2, size = 4, alpha = 0.8) +
+  #coord_cartesian(ylim=c(-1,1)) +
+  #facet_wrap(~Dimension) +
+  theme(plot.title = element_text(size=16, face="bold"),
+    axis.title.x = element_blank(),
+        axis.text.x = element_text(size="13"),
+        axis.text.y = element_text(size="13")) +
+  theme(axis.title.y = element_text(face="bold", size="15")) +
+  theme(strip.text.x = element_text(face = "bold", size = "15")) +
+  theme(legend.title = element_text(size="14", face="bold"),
+        legend.text = element_text(size="12")) +
+  ylab("Person Ability (Logits)\n") +
+  scale_color_manual(
+    values = c("Python Skills" = "#EA4C46","Data Science Skills" = "#FFAF42","Data Science Communication" = "#4FA64F","Data Science Practices" = "#73A5C6","Science Identity" = "#9570DD"), 
+    breaks = c("Python Skills","Data Science Skills","Data Science Communication","Data Science Practices","Science Identity"), 
+    labels = c("Python Skills","Data Science Skills","Data Science Communication","Data Science Practices","Science Identity"))
+
+growth_plot
+
+ggsave("growth_plot_2020_2022.png", growth_plot, height = 4, width = 8, units = "in", device = "png")
+```
+
+#### _**Splitting by cohort**_
+```{r build growth in ability plot by cohort, fig.width = 12, fig.height = 6, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE}
+abil_trial_dimension_all6$Trial <- factor(abil_trial_dimension_all6$Trial, levels = c("Before","After"))
+
+tgc5 <- summarySE(abil_trial_dimension_all6, measurevar="Ability", groupvars=c("Trial","Dimension","Cohort"))   ##Creates a summary of the data
+
+pd2 <- position_dodge(0.1) # move/dodge them .1 to the left and right
+
+# A data frame with labels for each facet
+f_labels <- data.frame(Cohort = c("Year 1", "Year 2", "Year 3"), label = c("n = XX", "n = YY", "n = ZZ"))
+
+
+
+
+growth_plot <- ggplot(tgc5, aes(x=Trial, y=Ability, color=Dimension, group=Dimension)) + 
+  geom_errorbar(aes(ymin=Ability-se, ymax=Ability+se), colour="black", width=.1, position=pd2) +
+  theme_bw() +
+  #ggtitle("Growth Across the Five Dimensions by Cohort") +
+  geom_line(position = pd2, lty = "solid", size = 1.5, alpha = 0.8) +
+  geom_point(position = pd2, size = 4, alpha = 0.8) +
+  #coord_cartesian(ylim=c(-1,1)) +
+  #facet_wrap(~Dimension) +
+  theme(plot.title = element_text(size=16, face="bold"),
+    axis.title.x = element_blank(),
+        axis.text.x = element_text(size="13"),
+        axis.text.y = element_text(size="13")) +
+  theme(axis.title.y = element_text(face="bold", size="15")) +
+  theme(strip.text.x = element_text(face = "bold", size = "15")) +
+  theme(legend.title = element_text(size="14", face="bold"),
+        legend.text = element_text(size="12")) +
+  ylab("Person Ability (Logits)\n") +
+  scale_color_manual(
+    values = c("Python Skills" = "#EA4C46","Data Science Skills" = "#FFAF42","Data Science Communication" = "#4FA64F","Data Science Practices" = "#73A5C6","Science Identity" = "#9570DD"), 
+    breaks = c("Python Skills","Data Science Skills","Data Science Communication","Data Science Practices","Science Identity"), 
+    labels = c("Python Skills","Data Science Skills","Data Science Communication","Data Science Practices","Science Identity")) + 
+  facet_wrap(~Cohort)
+  #geom_text(x = 1, y = 6.25, aes(label = label), data = f_labels)
+
+growth_plot
+
+ggsave("growth_plot_by_cohort_2020_2022.png", growth_plot, height = 4, width = 8, units = "in", device = "png")
+```
