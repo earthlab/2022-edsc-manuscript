@@ -8,13 +8,13 @@ date: ""
 # Installing libraries
 library(TAM) # for Rasch modeling
 library(WrightMap) # to build item-person (Wright) maps
-library(lsr)  #to calculate Cohen's d
-library(DescTools)  #to calculate etasquared
+library(lsr)  # to calculate Cohen's d
+library(DescTools)  # to calculate eta-squared
 library(Rmisc) # to calculate summary statistics
-library(tidyverse)
-library(cowplot)
-library(knitr)
-library(magick)
+library(tidyverse) # for plotting
+library(cowplot) # for image building
+library(magick) # for image processing
+library(knitr) # for knitting
 
 
 # Create logo banner for plots
