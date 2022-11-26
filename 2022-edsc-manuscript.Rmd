@@ -5,7 +5,6 @@ date: ""
 ---
 
 ```{r read data & install libraries, fig.width = 4, fig.asp = .99, results='markup',message=FALSE ,tidy=TRUE}
-
 # Installing libraries
 library(TAM) # for Rasch modeling
 library(WrightMap) # to build item-person (Wright) maps
@@ -611,7 +610,7 @@ ggsave("science-identity-2020-2022-percenatage.png", plot0, height = 5, width = 
 
 ***
 
-### Rasch Modeling
+### Rasch Modeling (Wright Maps)
 #### _**Python Skills**_
 ```{r build comfort rasch models tech, fig.width = 3, fig.asp = .67, results='markup', echo=FALSE, warning = FALSE, message = FALSE, tidy=TRUE, include = FALSE}
 python_comf_num <- read.csv("20-22-python-skills-num.csv")
@@ -996,8 +995,8 @@ anova(model)
 EtaSq(model, type = 2)
 ```
 
-### _t_-testing
-```{r filtering, include=FALSE}
+### _t_-testing & Cohen's _d_
+```{r filtering, echo=FALSE, include=FALSE}
 # Cohort
 yr1 <- filter(abil_trial_dimension_all6, Cohort == "Year 1")
 yr1
@@ -1056,30 +1055,16 @@ techcomfortpost
 abil_trial_dimension_all6$Trial <- factor(abil_trial_dimension_all6$Trial, 
                       level = c("Before",
                                 "After"))
-
-
-p <- ggplot(abil_trial_dimension_all6, aes(x=Dimension, y=Ability)) + 
-  geom_boxplot() +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 5)) +
-  theme(axis.title.x = element_blank()) + 
-  facet_wrap(~ Trial) +
-  labs(y = "Ability (logits)")
-
-p
-
 ```
 
-
 #### _**Data Science Communication**_
-```{r t testing - data & communication, echo=FALSE}
+```{r t testing - data & communication, echo=FALSE, tidy=TRUE}
 t.test(comfortpost$Ability, comfortpre$Ability)
 cohensD(comfortpost$Ability, comfortpre$Ability)
 ```
 
-
-#### _**Data Science Communication by Year**_
-```{r}
-# science identity pre by year
+```{r, echo=FALSE, include=FALSE}
+# data science communication pre by year
 ds_comms_pre1 <- filter(comfortpre, Cohort == "Year 1")
 ds_comms_pre1
 
@@ -1091,7 +1076,7 @@ ds_comms_pre3
 
 
 
-# science identity post by year
+# data science communication post by year
 ds_comms_post1 <- filter(comfortpost, Cohort == "Year 1")
 ds_comms_post1
 
@@ -1122,14 +1107,13 @@ cohensD(ds_comms_post3$Ability, ds_comms_pre3$Ability)
 ***
 
 #### _**Data Science Practices**_
-```{r t testing - science practices, echo=FALSE}
+```{r t testing - science practices, echo=FALSE, tidy=TRUE}
 t.test(confpost$Ability, confpre$Ability)
 cohensD(confpost$Ability, confpre$Ability)
 ```
 
-#### _**Data Science Practices by Year**_
-```{r}
-# science identity pre by year
+```{r, echo=FALSE, include=FALSE}
+# data science practices (pre) by year
 ds_pract_pre1 <- filter(confpre, Cohort == "Year 1")
 ds_pract_pre1
 
@@ -1141,7 +1125,7 @@ ds_pract_pre3
 
 
 
-# science identity post by year
+# data science practices (post) by year
 ds_pract_post1 <- filter(confpost, Cohort == "Year 1")
 ds_pract_post1
 
@@ -1171,13 +1155,12 @@ cohensD(ds_pract_post3$Ability, ds_pract_pre3$Ability)
 ***
 
 #### _**Science Identity**_
-```{r t testing - science identity, echo=FALSE}
+```{r t testing - science identity, echo=FALSE, tidy=TRUE}
 t.test(idpost$Ability, idpre$Ability)
 cohensD(idpost$Ability, idpre$Ability)
 ```
 
-#### _**Science Identity by Year**_
-```{r t testing - science identity by year}
+```{r t testing - science identity by year, echo=FALSE, include=FALSE}
 # science identity pre by year
 idpre1 <- filter(idpre, Cohort == "Year 1")
 idpre1
@@ -1248,16 +1231,14 @@ cohensD(sci_id_growth3$Diff, sci_id_growth1$Diff)
 ***
 
 #### _**Data Science Skills**_
-```{r t testing - python skills, echo=FALSE}
+```{r t testing - python skills, echo=FALSE, tidy=TRUE}
 t.test(techconfpost$Ability, techconfpre$Ability)
 cohensD(techconfpost$Ability, techconfpre$Ability)
 ```
 
 
-
-#### _**Data Science Skills by Year**_
-```{r t testing - data science skills by year}
-# science identity pre by year
+```{r t testing - data science skills by year, echo=FALSE, include=FALSE}
+### Data Science Skills by year (pre)
 ds_skills_pre1 <- filter(techconfpre, Cohort == "Year 1")
 ds_skills_pre1
 
@@ -1269,7 +1250,7 @@ ds_skills_pre3
 
 
 
-# science identity post by year
+# Data science skills (post) by year
 ds_skills_post1 <- filter(techconfpost, Cohort == "Year 1")
 ds_skills_post1
 
@@ -1299,15 +1280,14 @@ cohensD(ds_skills_post3$Ability, ds_skills_pre3$Ability)
 ***
 
 #### _**Python Skills**_
-```{r t testing - data science skills, echo=FALSE}
+```{r t testing - data science skills, echo=FALSE, tidy=TRUE}
 t.test(techcomfortpost$Ability, techcomfortpre$Ability)
 cohensD(techcomfortpost$Ability, techcomfortpre$Ability)
 ```
 
 
-#### _**Python Skills by Year**_
-```{r t testing - python skills by year}
-# science identity pre by year
+```{r t testing - python skills by year, echo=FALSE, include=FALSE}
+#### Python Skills (pre) by Year
 python_pre1 <- filter(techcomfortpre, Cohort == "Year 1")
 python_pre1
 
@@ -1319,7 +1299,7 @@ python_pre3
 
 
 
-# science identity post by year
+# Python skills (post) by year
 python_post1 <- filter(techcomfortpost, Cohort == "Year 1")
 python_post1
 
@@ -1330,7 +1310,7 @@ python_post3 <- filter(techcomfortpost, Cohort == "Year 3")
 python_post3
 
 
-# t-testing science identity by year
+# t-testing python skills by year
 # Year 1
 t.test(python_post1$Ability, python_pre1$Ability)
 cohensD(python_post1$Ability, python_pre1$Ability)
@@ -1350,6 +1330,18 @@ cohensD(python_post3$Ability, python_pre3$Ability)
 t.test(python_pre3$Ability, python_pre1$Ability)
 t.test(python_pre2$Ability, python_pre1$Ability)
 cohensD(idpost3$Ability, idpre1$Ability)
+```
+
+```{r ability growth boxplots, echo=FALSE, fig.width=8, fig.height=4}
+p <- ggplot(abil_trial_dimension_all6, aes(x=Dimension, y=Ability)) + 
+  geom_boxplot() +
+  ggtitle("Change in Ability by Dimension & Trial (Before/After)") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 5)) +
+  theme(axis.title.x = element_blank()) + 
+  facet_wrap(~ Trial) +
+  labs(y = "Ability (logits)")
+
+p
 ```
 
 ***
